@@ -39,6 +39,7 @@ class Viewer:
         self.background = pygame.Surface((GROUND_WIDTH, GROUND_HEIGHT))
 
         self.clock = pygame.time.Clock()
+        self.fps = int(os.environ.get("PIKACHU_FPS", 30))
 
         self.ball_images = []
         self.player_images = []
@@ -139,7 +140,7 @@ class Viewer:
 
     def render(self) -> None:
         if not self.headless:
-            self.clock.tick(30)
+            self.clock.tick(self.fps)
             pygame.display.update()
 
     def get_screen_rgb_array(self) -> np.ndarray:
