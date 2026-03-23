@@ -1,4 +1,5 @@
 # gym-pikachu-volleyball
+![](gameplay.gif)
 
 A [Gymnasium](https://gymnasium.farama.org/) environment for the classic browser game [Pikachu Volleyball](https://gorisanson.github.io/pikachu-volleyball/en/), built for reinforcement learning research.
 
