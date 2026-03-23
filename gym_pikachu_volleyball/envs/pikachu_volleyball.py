@@ -15,7 +15,7 @@ class PikachuVolleyballEnv(gym.Env):
     pixel_mode = False
     is_player2_serve = False
 
-    def __init__(self, is_player1_computer: bool, is_player2_computer: bool, render_mode: str, limited_timestep: int):
+    def __init__(self, render_mode: str, limited_timestep: int):
         super(PikachuVolleyballEnv, self).__init__()
 
         self.action_space = spaces.Discrete(18)
@@ -31,7 +31,7 @@ class PikachuVolleyballEnv(gym.Env):
             high = np.array([np.finfo(np.float32).max] * 10)
             self.observation_space = spaces.Box(-high, high)
 
-        self.engine = Engine(is_player1_computer, is_player2_computer, self.more_random)
+        self.engine = Engine(self.more_random)
         self.engine.create_viewer(render_mode)
 
         self.render_mode = render_mode
@@ -42,13 +42,24 @@ class PikachuVolleyballEnv(gym.Env):
     def render(self):
         return self.engine.render(self.render_mode)
 
-    def step(self, action, other_action = None):
-        if other_action == None:
-            other_action = self.engine.let_computer_decide_user_input(player_id=0)
-            converted_action = (other_action, convert_to_user_input(action, 1))
+    def step(self, action):
+        if isinstance(action, (tuple, list)):
+            p1_action, p2_action = action
         else:
-            converted_action = (convert_to_user_input(other_action, 0), convert_to_user_input(action, 1))
+            p1_action, p2_action = action, None
+            
+        if p1_action is None:
+            p1_action = self.engine.let_computer_decide_user_input(player_id=0)
+        else:
+            p1_action = convert_to_user_input(p1_action, 0)
         
+        if p2_action is None:
+            p2_action = self.engine.let_computer_decide_user_input(player_id=1)
+        else:
+            p2_action = convert_to_user_input(p2_action, 1)
+        
+        converted_action = (p1_action, p2_action)
+            
         self.timestep += 1
         is_ball_touching_ground = self.engine.step(converted_action)
         self.engine.viewer.update()

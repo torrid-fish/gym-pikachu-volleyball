@@ -8,6 +8,7 @@ setup(
     install_requires=[
         "gymnasium >= 0.28.1",
         "pygame >= 2.1.2",
+        "opencv-python"
     ],
     description="An openai-gym wrapper for pikachu-volleyball",
     url="https://github.com/HoseongLee/gym-pikachu-volleyball",

@@ -10,10 +10,10 @@ from gym_pikachu_volleyball.envs.common import UserInput
 class Engine:
     __slots__ = ['players', 'ball', 'viewer', 'more_random']
 
-    def __init__(self, is_player1_computer: bool, is_player2_computer: bool, more_random: bool) -> None:
+    def __init__(self, more_random: bool) -> None:
         self.players = (
-                Player(False, is_player1_computer), 
-                Player(True, is_player2_computer))
+                Player(False), 
+                Player(True))
 
         self.ball = Ball(False)
         self.more_random = more_random
@@ -419,16 +419,15 @@ class Engine:
         self.viewer.close()
 
 class Player:
-    __slots__ = ['is_player2', 'is_computer', 
+    __slots__ = ['is_player2', 
             'diving_direction', 'lying_down_duration_left', 
             'is_winner', 'game_ended', 'computer_where_to_stand_by', 
             'x', 'y', 'y_velocity', 'is_collision_with_ball_happening', 
             'state', 'frame_number', 'normal_status_arm_swing_direction', 
             'delay_before_next_frame', 'computer_boldness']
 
-    def __init__(self, is_player2: bool, is_computer: bool) -> None:
+    def __init__(self, is_player2: bool) -> None:
         self.is_player2 = is_player2
-        self.is_computer = is_computer
 
         self.diving_direction = 0
         self.lying_down_duration_left = -1
