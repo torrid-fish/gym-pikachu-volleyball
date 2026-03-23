@@ -70,7 +70,7 @@ class PikachuVolleyballEnv(gym.Env):
         }
         if is_ball_touching_ground or self.timestep >= self.limited_timestep:
             reward = -1 if self.timestep >= self.limited_timestep or self.engine.ball.punch_effect_x < GROUND_HALF_WIDTH else 1
-            self.is_player2_serve = not (reward == -1)
+            self.is_player2_serve = (reward == -1)
             return obs, reward, True, True, info
         return obs, 0.0, False, False, info
 
