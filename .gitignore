@@ -1,3 +1,4 @@
 .nix-shell-inputs
 shell.nix
 **/__pycache__/**
+*.egg-info
